@@ -15,16 +15,15 @@ import java.util.List;
 
 public class Main {
 
-    public static void main (String[] args){
+    public static void main(String[] args) {
         MainWindow mainWindow = new MainWindow();
         DebugLogger logger = new DebugLogger(mainWindow.consoleArea);
-        List solution;
 
         mainWindow.solveBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Solver solver = new Solver(mainWindow, logger);
-                solver.solveTask(500);
+                ResultWindow resultWindow = new ResultWindow(solver.solveTask(500));
             }
         });
 
@@ -39,6 +38,7 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 logger.clearArea();
+                mainWindow.clearTables();
             }
         });
 

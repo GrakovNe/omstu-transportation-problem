@@ -11,25 +11,24 @@ public class Solver {
     DebugLogger logger;
 
 
-    Solver(MainWindow mainWindow, DebugLogger logger){
-        if (mainWindow != null){
+    Solver(MainWindow mainWindow, DebugLogger logger) {
+        if (mainWindow != null) {
             this.mainWindow = mainWindow;
         }
 
-        if (logger != null){
+        if (logger != null) {
             this.logger = logger;
         }
     }
 
-    public List solveTask(int maxIterations){
+    public List solveTask(int maxIterations) {
         List result = new ArrayList();
         MathCore core = new MathCore(mainWindow.getShopNeeds(), mainWindow.getStorageStock(), mainWindow.getCostTable());
 
         /*Make our task closed*/
-        if (core.makeClosed()){
+        if (core.makeClosed()) {
             logger.writeLine("Транспортная задача закрыта изначально");
-        }
-        else {
+        } else {
             logger.writeLine("Транспортная задача закрыта в процессе решения");
         }
         logger.separate();
@@ -44,10 +43,9 @@ public class Solver {
 
 
         /*check for degeneracy and fix it*/
-        if (core.checkDegeneracy()){
+        if (core.checkDegeneracy()) {
             logger.writeLine("Задача не вырождена");
-        }
-        else{
+        } else {
             logger.writeLine("Присутствующая в задаче вырожденность исправлена");
         }
         logger.separate();
@@ -58,7 +56,7 @@ public class Solver {
             /*write some decorations*/
             logger.separate();
             logger.writeLine("####################");
-            logger.writeLine(("              Итерация #" + (i+1)));
+            logger.writeLine(("              Итерация #" + (i + 1)));
             logger.writeLine("####################");
             logger.separate();
 
@@ -78,13 +76,14 @@ public class Solver {
             logger.separate();
 
             /*check the iterative process to perfection*/
-            if (core.getMinimalDelta() >= 0){
+            if (core.getMinimalDelta() >= 0) {
                 logger.writeLine("####################");
                 logger.separate();
                 logger.writeLine("Все значения Δ неотрицательны\nОптимизация завершена!");
                 logger.writeLine("Текущая стоимость: " + core.getCurrentCost());
                 result.add(core.getCurrentCost());
                 result.add(core.getCurrentRoutes());
+                result.add(true);
                 return result;
             }
 
@@ -105,6 +104,7 @@ public class Solver {
         /*return our data as-is. Maybe something is wrong?*/
         result.add(core.getCurrentCost());
         result.add(core.getCurrentRoutes());
+        result.add(false);
         return result;
     }
 

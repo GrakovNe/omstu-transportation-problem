@@ -13,9 +13,9 @@ import java.util.List;
 /**
  * @author GrakovNe
  * @version 1.00
- * creates main application window
- * all JComponents are available from package
- * please, make this window non-resizable
+ *          creates main application window
+ *          all JComponents are available from package
+ *          please, make this window non-resizable
  */
 
 public class MainWindow extends JFrame {
@@ -27,12 +27,11 @@ public class MainWindow extends JFrame {
     private JTable shopNeeds, storageStock, mainTable;
     private JScrollPane shopNeedsWrapper, storageStockWparrer, mainTableWrapper, consoleAreaScroller;
 
-    public MainWindow(){
+    public MainWindow() {
         super("TRANSPORTATION PROBLEM SOLVER 1.00");
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("can't apply native interface");
         }
 
@@ -59,7 +58,7 @@ public class MainWindow extends JFrame {
         consoleArea.setLineWrap(true);
         consoleArea.setBackground(Color.white);
 
-        consoleAreaScroller = new JScrollPane (consoleArea);
+        consoleAreaScroller = new JScrollPane(consoleArea);
         consoleAreaScroller.setBounds(400, 30, 190, 430);
         consoleAreaScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         add(consoleAreaScroller);
@@ -89,18 +88,18 @@ public class MainWindow extends JFrame {
 
         storageStockHint = new JLabel("ТОВАРА НА СКЛАДАХ");
         storageStockHint.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        storageStockHint.setBounds(10,130,365,50);
+        storageStockHint.setBounds(10, 130, 365, 50);
         storageStockHint.setHorizontalAlignment(JLabel.CENTER);
         add(storageStockHint);
 
         costHiht = new JLabel("ПО СТОИМОСТИ");
         costHiht.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        costHiht.setBounds(10,240,365,50);
+        costHiht.setBounds(10, 240, 365, 50);
         costHiht.setHorizontalAlignment(JLabel.CENTER);
         add(costHiht);
 
         vericalSeparator = new JSeparator(JToolBar.Separator.VERTICAL);
-        vericalSeparator.setBounds(390,0,10,600);
+        vericalSeparator.setBounds(390, 0, 10, 600);
         add(vericalSeparator);
 
         storageNumBar = new JSlider(JSlider.HORIZONTAL, 10, 1);
@@ -110,10 +109,11 @@ public class MainWindow extends JFrame {
         storageNumBar.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                remove (storageStockWparrer);
+                remove(storageStockWparrer);
                 remove(mainTableWrapper);
                 updateStorageStockTable();
                 updateMainTable();
+                clearTables();
             }
         });
         add(storageNumBar);
@@ -129,6 +129,7 @@ public class MainWindow extends JFrame {
                 remove(mainTableWrapper);
                 updateShopNeedsTable();
                 updateMainTable();
+                clearTables();
             }
         });
         add(shopNumBar);
@@ -145,18 +146,18 @@ public class MainWindow extends JFrame {
         storageNumBar.setValue(3);
         shopNumBar.setValue(4);
 
-        mainTable.setValueAt(2,0,1);
-        mainTable.setValueAt(3,0,2);
-        mainTable.setValueAt(2,0,3);
-        mainTable.setValueAt(4,0,4);
-        mainTable.setValueAt(3,1,1);
-        mainTable.setValueAt(2,1,2);
-        mainTable.setValueAt(5,1,3);
-        mainTable.setValueAt(1,1,4);
-        mainTable.setValueAt(4,2,1);
-        mainTable.setValueAt(3,2,2);
-        mainTable.setValueAt(2,2,3);
-        mainTable.setValueAt(6,2,4);
+        mainTable.setValueAt(2, 0, 1);
+        mainTable.setValueAt(3, 0, 2);
+        mainTable.setValueAt(2, 0, 3);
+        mainTable.setValueAt(4, 0, 4);
+        mainTable.setValueAt(3, 1, 1);
+        mainTable.setValueAt(2, 1, 2);
+        mainTable.setValueAt(5, 1, 3);
+        mainTable.setValueAt(1, 1, 4);
+        mainTable.setValueAt(4, 2, 1);
+        mainTable.setValueAt(3, 2, 2);
+        mainTable.setValueAt(2, 2, 3);
+        mainTable.setValueAt(6, 2, 4);
 
         shopNeeds.setValueAt(20, 0, 0);
         shopNeeds.setValueAt(30, 0, 1);
@@ -171,23 +172,23 @@ public class MainWindow extends JFrame {
     /**
      * Routine method, which updates size of table with shops orders
      */
-    private void updateShopNeedsTable(){
+    private void updateShopNeedsTable() {
         Vector<String> rowNames = new Vector<>();
         Vector rowData = new Vector();
 
         for (int i = 0; i < shopNumBar.getValue(); i++) {
-            rowNames.add("B" + (i+1));
+            rowNames.add("B" + (i + 1));
             rowData.add("0");
         }
 
         Vector rowDataWrapper = new Vector();
         rowDataWrapper.add(rowData);
 
-        shopNeeds = new JTable(rowDataWrapper,rowNames);
-        shopNeeds.setRowHeight(0,30);
+        shopNeeds = new JTable(rowDataWrapper, rowNames);
+        shopNeeds.setRowHeight(0, 30);
         shopNeeds.setRowSelectionAllowed(false);
         shopNeedsWrapper = new JScrollPane(shopNeeds, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        shopNeedsWrapper.setBounds(6,70,376,50);
+        shopNeedsWrapper.setBounds(6, 70, 376, 50);
 
         shopNeedsWrapper.setBorder(BorderFactory.createEmptyBorder());
 
@@ -198,8 +199,8 @@ public class MainWindow extends JFrame {
     /**
      * Routine method, which updates size of table with storage stocks
      */
-    private void updateStorageStockTable(){
-        Vector <String> rowNames = new Vector<>();
+    private void updateStorageStockTable() {
+        Vector<String> rowNames = new Vector<>();
         Vector rowData = new Vector();
 
         for (int i = 0; i < storageNumBar.getValue(); i++) {
@@ -211,10 +212,10 @@ public class MainWindow extends JFrame {
         rowDataWrapper.add(rowData);
 
         storageStock = new JTable(rowDataWrapper, rowNames);
-        storageStock.setRowHeight(0,30);
+        storageStock.setRowHeight(0, 30);
         storageStock.setRowSelectionAllowed(false);
         storageStockWparrer = new JScrollPane(storageStock, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        storageStockWparrer.setBounds(6,180,376,50);
+        storageStockWparrer.setBounds(6, 180, 376, 50);
 
         storageStockWparrer.setBorder(BorderFactory.createEmptyBorder());
         add(storageStockWparrer);
@@ -223,21 +224,21 @@ public class MainWindow extends JFrame {
     /**
      * Routine method, which updates size of table with cost for every route
      */
-    private void updateMainTable(){
-        mainTable = new JTable(storageNumBar.getValue(), shopNumBar.getValue()+1);
+    private void updateMainTable() {
+        mainTable = new JTable(storageNumBar.getValue(), shopNumBar.getValue() + 1);
         mainTable.setRowSelectionAllowed(false);
         mainTable.getColumnModel().getColumn(0).setHeaderValue((""));
 
-        for (int i = 1; i < shopNumBar.getValue() + 1; i++){
-            mainTable.getColumnModel().getColumn(i).setHeaderValue("B" + i);
+        for (int i = 1; i < shopNumBar.getValue() + 1; i++) {
+            mainTable.getColumnModel().getColumn(i).setHeaderValue("Магазин №" + i);
         }
 
-        for (int i = 0; i < storageNumBar.getValue(); i++){
-            mainTable.setValueAt("A"+ (i+1), i, 0);
+        for (int i = 0; i < storageNumBar.getValue(); i++) {
+            mainTable.setValueAt("Склад №" + (i + 1), i, 0);
         }
 
         mainTableWrapper = new JScrollPane(mainTable);
-        mainTableWrapper.setBounds(6,290,376,200);
+        mainTableWrapper.setBounds(6, 290, 376, 200);
         mainTableWrapper.setBorder(BorderFactory.createEmptyBorder());
 
         add(mainTableWrapper);
@@ -245,39 +246,60 @@ public class MainWindow extends JFrame {
 
     /**
      * Will take info about shops orders from JTable
+     *
      * @return List with needs of every shops
      */
-    public List getShopNeeds(){
-        List <Integer> shopsList = new ArrayList();
-        for (int i = 0; i < shopNumBar.getValue(); i++){
-            shopsList.add(Integer.parseInt(shopNeeds.getValueAt(0,i).toString()));
+    public List getShopNeeds() {
+        List<Integer> shopsList = new ArrayList();
+        for (int i = 0; i < shopNumBar.getValue(); i++) {
+            try {
+                shopsList.add(Integer.parseInt(shopNeeds.getValueAt(0, i).toString()));
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Не все параметры магазинов указаны", "TRANSPORTATION PROBLEM SOLVER", JOptionPane.ERROR_MESSAGE);
+                throw new RuntimeException("Not all options are listed for orders");
+            }
         }
-        return  shopsList;
+        return shopsList;
     }
 
     /**
      * Will take info about storages stocks from JTable
+     *
      * @return List with stock iof every storages
      */
-    public List getStorageStock(){
+    public List getStorageStock() {
         List<Integer> storageList = new ArrayList();
-        for (int i = 0; i < storageNumBar.getValue(); i++){
-            storageList.add(Integer.parseInt(storageStock.getValueAt(0, i).toString()));
+        for (int i = 0; i < storageNumBar.getValue(); i++) {
+            try {
+                storageList.add(Integer.parseInt(storageStock.getValueAt(0, i).toString()));
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Не все параметры складов указаны", "TRANSPORTATION PROBLEM SOLVER", JOptionPane.ERROR_MESSAGE);
+                throw new RuntimeException("Not all options are listed for storages");
+            }
         }
-        return  storageList;
+        return storageList;
     }
 
     /**
      * Will take info about routes cost from JTable
+     *
      * @return List with list with cost for route from current storage to current shop.
      * First list has contain list with cost for route to every shop. Index of first list has contain number of storage
      */
-    public List getCostTable(){
+    public List getCostTable() {
         List storageCostList = new ArrayList();
-        for (int i = 0; i < storageNumBar.getValue(); i++){
+        for (int i = 0; i < storageNumBar.getValue(); i++) {
             List shopCost = new ArrayList();
-            for (int j = 1; j < shopNumBar.getValue()+1; j++){
-                shopCost.add(mainTable.getValueAt(i, j));
+            for (int j = 1; j < shopNumBar.getValue() + 1; j++) {
+                try {
+                    Integer.parseInt(mainTable.getValueAt(i, j).toString());
+                }catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Не все цены перевозок указаны", "TRANSPORTATION PROBLEM SOLVER", JOptionPane.ERROR_MESSAGE);
+                    throw new RuntimeException("Not all options are listed for costs");
+                }
+
+                    shopCost.add(mainTable.getValueAt(i, j));
+
             }
             storageCostList.add(shopCost);
         }
@@ -285,5 +307,27 @@ public class MainWindow extends JFrame {
         return storageCostList;
     }
 
-    
+    /**
+     * Will set 0 as value for all working cell for all working tables
+     */
+    public void clearTables() {
+        for (int i = 0; i < mainTable.getRowCount(); i++) {
+            for (int j = 1; j < mainTable.getColumnCount(); j++) {
+                mainTable.setValueAt(0, i, j);
+            }
+        }
+
+        for (int i = 0; i < shopNeeds.getRowCount(); i++) {
+            for (int j = 1; j < shopNeeds.getColumnCount(); j++) {
+                shopNeeds.setValueAt(0, i, j);
+            }
+        }
+
+        for (int i = 0; i < storageStock.getRowCount(); i++) {
+            for (int j = 1; j < storageStock.getColumnCount(); j++) {
+                storageStock.setValueAt(0, i, j);
+            }
+        }
+
+    }
 }
