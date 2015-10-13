@@ -46,28 +46,45 @@ public class Main {
                 }
 
                 logger.separate();
-                logger.writeLine("Рассчитаем потенциалы:");
-                core.calcPotintials();
-                logger.writeLine("Для поставшиков:  (" + core.getStockPotentials() + ")");
-                logger.writeLine("Для заказчиков:     (" + core.getOrdersPotentials() + ")");
-                logger.separate();
 
-                core.calcDeltas();
+                logger.writeLine("Начинаем итерационный процесс:");
 
-                logger.write("Отыщем минимальное Δ: ");
-                logger.writeSingleArrayInt(core.getMinimalDeltaCoords());
-                logger.separate();
+                for (int i = 0; i < 512; i++) {
+                    logger.separate();
+                    logger.writeLine("####################");
+                    logger.writeLine(("             Итерация #" + (i+1)));
+                    logger.writeLine("####################");
+                    logger.separate();
 
-                logger.writeLine("Построим замкнутый цикл:");
-                List<int[]> cycle = core.getCycle(core.getMinimalDeltaCoords());
-                logger.writePath(cycle);
-                logger.separate();
+                    logger.writeLine("Рассчитаем потенциалы:");
+                    core.calcPotintials();
+                    logger.writeLine("Для поставшиков:  (" + core.getStockPotentials() + ")");
+                    logger.writeLine("Для заказчиков:     (" + core.getOrdersPotentials() + ")");
+                    logger.separate();
 
-                logger.writeLine("Перераспределим перевозки:");
-                core.redistribute();
-                logger.writeDoubleArrayInt(core.getCurrentRoutes());
-                logger.writeLine("Текущая стоимость перевозок: " + core.getCurrentCost());
-                logger.separate();
+                    core.calcDeltas();
+
+                    logger.write("Отыщем минимальное Δ: ");
+                    logger.writeLine(String.valueOf(core.getMinimalDelta()));
+                    logger.separate();
+
+                    if (core.getMinimalDelta() >= 0){
+                        logger.writeLine("Все значения Δ неотрицательны\nОптимизация завершена!");
+                        logger.writeLine("Текущая стоимость: " + core.getCurrentCost());
+                        break;
+                    }
+
+                    logger.writeLine("Построим замкнутый цикл:");
+                    List<int[]> cycle = core.getCycle(core.getMinimalDeltaCoords());
+                    logger.writePath(cycle);
+                    logger.separate();
+
+                    logger.writeLine("Перераспределим перевозки:");
+                    core.redistribute();
+                    logger.writeDoubleArrayInt(core.getCurrentRoutes());
+                    logger.writeLine("Текущая стоимость перевозок: " + core.getCurrentCost());
+                    logger.separate();
+                }
 
 
             }

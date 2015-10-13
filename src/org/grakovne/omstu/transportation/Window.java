@@ -57,6 +57,7 @@ public class Window extends JFrame {
         consoleArea.setEditable(false);
         consoleArea.setWrapStyleWord(true);
         consoleArea.setLineWrap(true);
+        consoleArea.setBackground(Color.white);
 
         consoleAreaScroller = new JScrollPane (consoleArea);
         consoleAreaScroller.setBounds(400, 30, 190, 430);

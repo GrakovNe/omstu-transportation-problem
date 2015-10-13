@@ -180,7 +180,6 @@ public class MathCore {
     public void calcPotintials(){
         List<Integer> ordersPotentials = new ArrayList<>();
         List<Integer> stockPotentials = new ArrayList<>();
-
         stockPotentials.add(0);
 
         for (int i = 0; i < stock.size(); i++){
@@ -227,8 +226,8 @@ public class MathCore {
      */
     public int[][] calcDeltas(){
         deltas = new int[stock.size()][orders.size()];
-        for (int i  = 0; i < stock.size(); i++){
-            for (int j = 0; j < orders.size(); j++){
+        for (int i  = 0; i < stockPotentials.size(); i++){
+            for (int j = 0; j < ordersPotentials.size(); j++){
                 deltas[i][j] = Integer.parseInt(cost.get(i).get(j).toString()) - stockPotentials.get(i) - ordersPotentials.get(j);
             }
         }
@@ -284,9 +283,7 @@ public class MathCore {
         cyclePath.clear();
         cyclePath.add(startCell);
 
-        lookHorizotaly(startCell);
-
-        if (cyclePath.size() == 1){
+        if (!lookHorizotaly(startCell)){
             cyclePath.clear();
         }
 
@@ -348,12 +345,20 @@ public class MathCore {
 
             else {
                 routes[currentCell[0]][currentCell[1]] -= redistributeValue;
+                if (routes[currentCell[0]][currentCell[1]] == 0){
+                    routes[currentCell[0]][currentCell[1]] = -1;
+                }
             }
+
         }
 
     }
 
-    //public int[][] get
+
+    public int getMinimalDelta(){
+        int[] coords = getMinimalDeltaCoords();
+       return deltas[coords[0]][coords[1]];
+    }
 
 
 
