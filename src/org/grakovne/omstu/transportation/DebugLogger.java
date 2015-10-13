@@ -1,6 +1,7 @@
 package org.grakovne.omstu.transportation;
 
 import javax.swing.*;
+import java.util.List;
 
 /**
  * This allow use JTextArea for sending any debug info
@@ -79,6 +80,14 @@ public class DebugLogger {
             write("\n");
         }
         separate();
+    }
+
+    public void writePath(List<int[]> list){
+        write("(");
+        for (int[] element: list){
+            write(" [" + element[0] + ", " + element[1] + "] ");
+        }
+        write(")");
     }
 
     public void clearArea(){

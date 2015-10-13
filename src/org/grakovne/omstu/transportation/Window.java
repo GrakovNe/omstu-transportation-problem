@@ -53,7 +53,7 @@ public class Window extends JFrame {
         add(exitBtn);
 
         consoleArea = new JTextArea("");
-        consoleArea.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        consoleArea.setFont(new Font("Tahoma", Font.PLAIN, 11));
         consoleArea.setEditable(false);
         consoleArea.setWrapStyleWord(true);
         consoleArea.setLineWrap(true);

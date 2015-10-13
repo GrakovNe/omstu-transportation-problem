@@ -34,7 +34,6 @@ public class Main {
                 logger.separate();
 
                 logger.writeLine("Построим начальную карту перевозок:");
-                logger.separate();
                 logger.writeDoubleArrayInt(core.createBasicRoutes());
                 logger.writeLine("Текущая стоимость перевозок: " + core.getCurrentCost());
                 logger.separate();
@@ -53,21 +52,22 @@ public class Main {
                 logger.writeLine("Для заказчиков:     (" + core.getOrdersPotentials() + ")");
                 logger.separate();
 
-                logger.writeLine("Рассчитаем Δ: ");
-                logger.separate();
-                logger.writeDoubleArrayInt(core.calcDeltas());
+                core.calcDeltas();
 
                 logger.write("Отыщем минимальное Δ: ");
-                int[] coords = core.getMinimalDeltaCoords();
                 logger.writeSingleArrayInt(core.getMinimalDeltaCoords());
                 logger.separate();
 
-                core.getCycle(coords);
+                logger.writeLine("Построим замкнутый цикл:");
+                List<int[]> cycle = core.getCycle(core.getMinimalDeltaCoords());
+                logger.writePath(cycle);
+                logger.separate();
 
-
-
-
-
+                logger.writeLine("Перераспределим перевозки:");
+                core.redistribute();
+                logger.writeDoubleArrayInt(core.getCurrentRoutes());
+                logger.writeLine("Текущая стоимость перевозок: " + core.getCurrentCost());
+                logger.separate();
 
 
             }

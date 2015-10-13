@@ -12,6 +12,7 @@ public class MathCore {
     private List<Integer> stock = new ArrayList<>();
     private List<Integer> ordersPotentials = new ArrayList<>();
     private List<Integer> stockPotentials = new ArrayList<>();
+    List<int[]> cyclePath = new ArrayList<>();
     private List<List> cost = new ArrayList<>();
     private int[][] routes;
     private int[][] deltas;
@@ -274,17 +275,14 @@ public class MathCore {
      * IT'S template! MUST BE WRITTEN AGAING!
      * Return List with coordinates of array's cells when it can be
      * List.size() == 0 when cycle is't possible
-     * @param coords of cell
+     * @param startCell
      * @return List with coords of cell
      */
 
-    List<int[]> cyclePath = new ArrayList<>();
+
     public List<int[]> getCycle(int[] startCell){
         cyclePath.clear();
         cyclePath.add(startCell);
-
-        //TODO: make recursive algorithm for building route
-
 
         lookHorizotaly(startCell);
 
@@ -292,33 +290,19 @@ public class MathCore {
             cyclePath.clear();
         }
 
-        System.out.println("finished");
-        for (int[] element: cyclePath){
-            System.out.println(element[0] + " " + element[1]);
-        }
-        System.out.print(cyclePath.size());
         return cyclePath;
     }
 
     private boolean lookHorizotaly(int[] currentCoords){
-        //System.out.println(cyclePath.get(0)[0] + " " + cyclePath.get(0)[1]);
-
         for (int i = 0; i < orders.size(); i++){
-            if (routes[cyclePath.get(0)[0]][i] > 0){
-                if ((currentCoords[0] == cyclePath.get(0)[0]) && (currentCoords[0] == cyclePath.get(0)[1]) && (cyclePath.size() > 2)){
-                    cyclePath.add(currentCoords);
-                    return true; // full complete circuit
+            if ( (i != currentCoords[1]) && (routes[currentCoords[0]][i] > 0) ){
+                int [] newCoords = {currentCoords[0], i};
+                if (i == cyclePath.get(0)[1]){
+                    cyclePath.add(newCoords);
+                    return true;
                 }
-
-                //System.out.println(currentCoords[0] + " " + i);
-                if (i == currentCoords[1]){
-                    continue;
-                }
-
-                int[] newCurrentCoords = {currentCoords[0], i};
-                if (lookVerticaly(newCurrentCoords)){
-                    System.out.println(newCurrentCoords[0] + " " + newCurrentCoords[1]);
-                    cyclePath.add(newCurrentCoords);
+                if (lookVerticaly(newCoords)){
+                    cyclePath.add(newCoords);
                     return true;
                 }
             }
@@ -328,15 +312,48 @@ public class MathCore {
     }
 
     private boolean lookVerticaly(int[] currentCoords){
-        /*for (int j  = 0; j < stock.size(); j++){
-           if (currentCoords[0] == cyclePath.get(0)[0])&&(){
-
+        for (int i = 0; i < stock.size(); i++) {
+            if ((i != currentCoords[0])&&(routes[i][currentCoords[1]]>0)){
+                int[] newCoords = {i, currentCoords[1]};
+                if (lookHorizotaly(newCoords)){
+                    cyclePath.add(newCoords);
+                    return true;
+                }
             }
-        }*/
+        }
 
-        //System.out.println(currentCoords[0] + " " + currentCoords[1]);
-        return true;
+        return false;
     }
+
+    public void redistribute(){
+        int redistributeValue = Integer.MAX_VALUE;
+
+        for (int i = 1; i < cyclePath.size(); i+=2){
+            int[] currentCell = cyclePath.get(i);
+            if ( (routes[currentCell[0]][currentCell[1]] > 0) && (routes[currentCell[0]][currentCell[1]] < redistributeValue) ){
+                redistributeValue = routes[currentCell[0]][currentCell[1]];
+            }
+        }
+
+        for (int i = 0; i < cyclePath.size(); i++){
+            int[] currentCell = cyclePath.get(i);
+
+            if (routes[currentCell[0]][currentCell[1]] == -1){
+                routes[currentCell[0]][currentCell[1]] = 0;
+            }
+
+            if (i%2 == 0){
+                routes[currentCell[0]][currentCell[1]] += redistributeValue;
+            }
+
+            else {
+                routes[currentCell[0]][currentCell[1]] -= redistributeValue;
+            }
+        }
+
+    }
+
+    //public int[][] get
 
 
 
