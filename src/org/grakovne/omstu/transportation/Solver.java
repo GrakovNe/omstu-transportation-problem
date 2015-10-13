@@ -42,12 +42,15 @@ public class Solver {
         logger.separate();
 
 
+
+
         /*check for degeneracy and fix it*/
         if (core.checkDegeneracy()) {
             logger.writeLine("Задача не вырождена");
         } else {
             logger.writeLine("Присутствующая в задаче вырожденность исправлена");
         }
+
         logger.separate();
 
         /*start iterations. maxIterations is need for avoid looping*/
@@ -74,6 +77,10 @@ public class Solver {
             logger.write("Отыщем минимальное Δ: ");
             logger.writeLine(String.valueOf(core.getMinimalDelta()));
             logger.separate();
+            /*logger.writeDoubleArrayInt(core.deltas);
+            logger.writeDoubleArrayInt(core.getCurrentRoutes());*/
+
+
 
             /*check the iterative process to perfection*/
             if (core.getMinimalDelta() >= 0) {
@@ -86,7 +93,7 @@ public class Solver {
                 result.add(true);
                 return result;
             }
-
+            //core.checkDegeneracy();
             /*make a cyclical route on basic cells*/
             logger.writeLine("Построим замкнутый цикл:");
             List<int[]> cycle = core.getCycle(core.getMinimalDeltaCoords());

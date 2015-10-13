@@ -16,7 +16,7 @@ public class MathCore {
     private List<List> cost = new ArrayList<>();
     private List<int[]> cyclePath = new ArrayList<>();
     private int[][] routes;
-    private int[][] deltas;
+    public int[][] deltas;
 
     MathCore(List orders, List stock, List cost) {
         if (orders != null) {
@@ -151,11 +151,13 @@ public class MathCore {
             return true;
         }
 
+
         while (basicSellsNum < stock.size() + orders.size() - 1) {
             int[] randomCell = getRandomCell();
             while (routes[randomCell[0]][randomCell[1]] != -1) {
                 randomCell = getRandomCell();
             }
+
 
             if (getCycle(randomCell).size() == 0) {
                 routes[randomCell[0]][randomCell[1]] = 0;
@@ -163,7 +165,6 @@ public class MathCore {
             }
         }
         return false;
-
     }
 
     /**
@@ -297,7 +298,7 @@ public class MathCore {
      */
     private boolean lookHorizotaly(int[] currentCoords) {
         for (int i = 0; i < orders.size(); i++) {
-            if ((i != currentCoords[1]) && (routes[currentCoords[0]][i] > 0)) {
+            if ((i != currentCoords[1]) && (routes[currentCoords[0]][i] != -1) && (cyclePath.size() %2 != 0)) {
                 int[] newCoords = {currentCoords[0], i};
                 if (i == cyclePath.get(0)[1]) {
                     cyclePath.add(newCoords);
@@ -321,7 +322,7 @@ public class MathCore {
      */
     private boolean lookVerticaly(int[] currentCoords) {
         for (int i = 0; i < stock.size(); i++) {
-            if ((i != currentCoords[0]) && (routes[i][currentCoords[1]] > 0)) {
+            if ((i != currentCoords[0]) && (routes[i][currentCoords[1]] != -1)) {
                 int[] newCoords = {i, currentCoords[1]};
                 if (lookHorizotaly(newCoords)) {
                     cyclePath.add(newCoords);
@@ -341,7 +342,7 @@ public class MathCore {
 
         for (int i = 1; i < cyclePath.size(); i += 2) {
             int[] currentCell = cyclePath.get(i);
-            if ((routes[currentCell[0]][currentCell[1]] > 0) && (routes[currentCell[0]][currentCell[1]] < redistributeValue)) {
+            if ((routes[currentCell[0]][currentCell[1]] != -1) && (routes[currentCell[0]][currentCell[1]] < redistributeValue)) {
                 redistributeValue = routes[currentCell[0]][currentCell[1]];
             }
         }
@@ -357,7 +358,7 @@ public class MathCore {
                 routes[currentCell[0]][currentCell[1]] += redistributeValue;
             } else {
                 routes[currentCell[0]][currentCell[1]] -= redistributeValue;
-                if (routes[currentCell[0]][currentCell[1]] == 0) {
+                if (routes[currentCell[0]][currentCell[1]] <= 0) {
                     routes[currentCell[0]][currentCell[1]] = -1;
                 }
             }
