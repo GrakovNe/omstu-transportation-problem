@@ -28,7 +28,7 @@ public class Window extends JFrame {
     private JScrollPane shopNeedsWrapper, storageStockWparrer, mainTableWrapper, consoleAreaScroller;
 
     public Window(){
-        super ("TRANSPORTATION PROBLEM SOLVER 1.00");
+        super("TRANSPORTATION PROBLEM SOLVER 1.00");
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }
@@ -37,7 +37,7 @@ public class Window extends JFrame {
         }
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setBounds(300,100,605,600);
+        setBounds(300, 100, 605, 600);
         setLayout(null);
 
         solveBtn = new JButton("Решить");
@@ -53,7 +53,7 @@ public class Window extends JFrame {
         add(exitBtn);
 
         consoleArea = new JTextArea("");
-        consoleArea.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+        consoleArea.setFont(new Font("Tahoma", Font.PLAIN, 12));
         consoleArea.setEditable(false);
         consoleArea.setWrapStyleWord(true);
         consoleArea.setLineWrap(true);
@@ -65,35 +65,35 @@ public class Window extends JFrame {
 
 
         storageNumHint = new JLabel("Количество складов:");
-        storageNumHint.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+        storageNumHint.setFont(new Font("Arial", Font.ITALIC, 14));
         storageNumHint.setBounds(20, 500, 200, 30);
         add(storageNumHint);
 
         shopNumHint = new JLabel("Количество магазинов:");
-        shopNumHint.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-        shopNumHint.setBounds(20,525,200,30);
+        shopNumHint.setFont(new Font("Arial", Font.ITALIC, 14));
+        shopNumHint.setBounds(20, 525, 200, 30);
         add(shopNumHint);
 
         consoleAreaHint = new JLabel("Консоль отладки:");
-        consoleAreaHint.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+        consoleAreaHint.setFont(new Font("Arial", Font.ITALIC, 14));
         consoleAreaHint.setBounds(400, 10, 190, 15);
         consoleAreaHint.setHorizontalAlignment(JLabel.CENTER);
         add(consoleAreaHint);
 
         shopNeedsHint = new JLabel("НЕОБХОДИМО ДОСТАВИТЬ");
-        shopNeedsHint.setFont(new Font("Times New Roman", Font.PLAIN, 24));
-        shopNeedsHint.setBounds(10,20,365,50);
+        shopNeedsHint.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        shopNeedsHint.setBounds(10, 20, 365, 50);
         shopNeedsHint.setHorizontalAlignment(JLabel.CENTER);
         add(shopNeedsHint);
 
         storageStockHint = new JLabel("ТОВАРА НА СКЛАДАХ");
-        storageStockHint.setFont(new Font("Times New Roman", Font.PLAIN, 24));
+        storageStockHint.setFont(new Font("Tahoma", Font.PLAIN, 20));
         storageStockHint.setBounds(10,130,365,50);
         storageStockHint.setHorizontalAlignment(JLabel.CENTER);
         add(storageStockHint);
 
         costHiht = new JLabel("ПО СТОИМОСТИ");
-        costHiht.setFont(new Font("Times New Roman", Font.PLAIN, 24));
+        costHiht.setFont(new Font("Tahoma", Font.PLAIN, 20));
         costHiht.setBounds(10,240,365,50);
         costHiht.setHorizontalAlignment(JLabel.CENTER);
         add(costHiht);
@@ -205,17 +205,17 @@ public class Window extends JFrame {
             rowData.add("0");
         }
 
-            Vector rowDataWrapper = new Vector();
-            rowDataWrapper.add(rowData);
+        Vector rowDataWrapper = new Vector();
+        rowDataWrapper.add(rowData);
 
-            storageStock = new JTable(rowDataWrapper, rowNames);
-            storageStock.setRowHeight(0,30);
-            storageStock.setRowSelectionAllowed(false);
-            storageStockWparrer = new JScrollPane(storageStock, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-            storageStockWparrer.setBounds(6,180,376,50);
+        storageStock = new JTable(rowDataWrapper, rowNames);
+        storageStock.setRowHeight(0,30);
+        storageStock.setRowSelectionAllowed(false);
+        storageStockWparrer = new JScrollPane(storageStock, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        storageStockWparrer.setBounds(6,180,376,50);
 
-            storageStockWparrer.setBorder(BorderFactory.createEmptyBorder());
-            add(storageStockWparrer);
+        storageStockWparrer.setBorder(BorderFactory.createEmptyBorder());
+        add(storageStockWparrer);
     }
 
 
