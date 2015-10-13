@@ -14,83 +14,19 @@ import java.util.List;
  */
 
 public class Main {
-    public static void main (String[] args){
-        Window mainWindow = new Window();
-        mainWindow.setVisible(true);
-        mainWindow.setResizable(false);
-        DebugLogger logger = new DebugLogger(mainWindow.consoleArea);
 
+    public static void main (String[] args){
+        MainWindow mainWindow = new MainWindow();
+        DebugLogger logger = new DebugLogger(mainWindow.consoleArea);
+        List solution;
 
         mainWindow.solveBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MathCore core = new MathCore(mainWindow.getShopNeeds(), mainWindow.getStorageStock(), mainWindow.getCostTable());
-                if (core.makeClosed()){
-                    logger.writeLine("Транспортная задача закрыта изначально");
-                }
-                else {
-                    logger.writeLine("Транспортная задача закрыта в процессе решения");
-                }
-                logger.separate();
-
-                logger.writeLine("Построим начальную карту перевозок:");
-                logger.writeDoubleArrayInt(core.createBasicRoutes());
-                logger.writeLine("Текущая стоимость перевозок: " + core.getCurrentCost());
-                logger.separate();
-
-                if (core.checkDegeneracy()){
-                    logger.writeLine("Задача не вырождена");
-                }
-                else{
-                    logger.writeLine("Присутствующая в задаче вырожденность исправлена");
-                }
-
-                logger.separate();
-
-                logger.writeLine("Начинаем итерационный процесс:");
-
-                for (int i = 0; i < 512; i++) {
-                    logger.separate();
-                    logger.writeLine("####################");
-                    logger.writeLine(("             Итерация #" + (i+1)));
-                    logger.writeLine("####################");
-                    logger.separate();
-
-                    logger.writeLine("Рассчитаем потенциалы:");
-                    core.calcPotintials();
-                    logger.writeLine("Для поставшиков:  (" + core.getStockPotentials() + ")");
-                    logger.writeLine("Для заказчиков:     (" + core.getOrdersPotentials() + ")");
-                    logger.separate();
-
-                    core.calcDeltas();
-
-                    logger.write("Отыщем минимальное Δ: ");
-                    logger.writeLine(String.valueOf(core.getMinimalDelta()));
-                    logger.separate();
-
-                    if (core.getMinimalDelta() >= 0){
-                        logger.writeLine("Все значения Δ неотрицательны\nОптимизация завершена!");
-                        logger.writeLine("Текущая стоимость: " + core.getCurrentCost());
-                        break;
-                    }
-
-                    logger.writeLine("Построим замкнутый цикл:");
-                    List<int[]> cycle = core.getCycle(core.getMinimalDeltaCoords());
-                    logger.writePath(cycle);
-                    logger.separate();
-
-                    logger.writeLine("Перераспределим перевозки:");
-                    core.redistribute();
-                    logger.writeDoubleArrayInt(core.getCurrentRoutes());
-                    logger.writeLine("Текущая стоимость перевозок: " + core.getCurrentCost());
-                    logger.separate();
-                }
-
-
+                Solver solver = new Solver(mainWindow, logger);
+                solver.solveTask(500);
             }
         });
-
-
 
         mainWindow.exitBtn.addActionListener(new ActionListener() {
             @Override

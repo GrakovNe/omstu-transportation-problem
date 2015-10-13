@@ -18,7 +18,7 @@ import java.util.List;
  * please, make this window non-resizable
  */
 
-public class Window extends JFrame {
+public class MainWindow extends JFrame {
     JButton solveBtn, clearBtn, exitBtn;
     JTextArea consoleArea;
     private JSeparator vericalSeparator;
@@ -27,7 +27,7 @@ public class Window extends JFrame {
     private JTable shopNeeds, storageStock, mainTable;
     private JScrollPane shopNeedsWrapper, storageStockWparrer, mainTableWrapper, consoleAreaScroller;
 
-    public Window(){
+    public MainWindow(){
         super("TRANSPORTATION PROBLEM SOLVER 1.00");
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -137,6 +137,9 @@ public class Window extends JFrame {
         updateStorageStockTable();
         updateMainTable();
 
+        setVisible(true);
+        setResizable(false);
+
 
         /*just debug examples data. MUST be deleted before commit to production*/
         storageNumBar.setValue(3);
@@ -168,7 +171,6 @@ public class Window extends JFrame {
     /**
      * Routine method, which updates size of table with shops orders
      */
-
     private void updateShopNeedsTable(){
         Vector<String> rowNames = new Vector<>();
         Vector rowData = new Vector();
@@ -196,7 +198,6 @@ public class Window extends JFrame {
     /**
      * Routine method, which updates size of table with storage stocks
      */
-
     private void updateStorageStockTable(){
         Vector <String> rowNames = new Vector<>();
         Vector rowData = new Vector();
@@ -219,11 +220,9 @@ public class Window extends JFrame {
         add(storageStockWparrer);
     }
 
-
     /**
      * Routine method, which updates size of table with cost for every route
      */
-
     private void updateMainTable(){
         mainTable = new JTable(storageNumBar.getValue(), shopNumBar.getValue()+1);
         mainTable.setRowSelectionAllowed(false);
@@ -244,12 +243,10 @@ public class Window extends JFrame {
         add(mainTableWrapper);
     }
 
-
     /**
      * Will take info about shops orders from JTable
      * @return List with needs of every shops
      */
-
     public List getShopNeeds(){
         List <Integer> shopsList = new ArrayList();
         for (int i = 0; i < shopNumBar.getValue(); i++){
@@ -262,7 +259,6 @@ public class Window extends JFrame {
      * Will take info about storages stocks from JTable
      * @return List with stock iof every storages
      */
-
     public List getStorageStock(){
         List<Integer> storageList = new ArrayList();
         for (int i = 0; i < storageNumBar.getValue(); i++){
@@ -276,7 +272,6 @@ public class Window extends JFrame {
      * @return List with list with cost for route from current storage to current shop.
      * First list has contain list with cost for route to every shop. Index of first list has contain number of storage
      */
-
     public List getCostTable(){
         List storageCostList = new ArrayList();
         for (int i = 0; i < storageNumBar.getValue(); i++){
@@ -289,4 +284,6 @@ public class Window extends JFrame {
 
         return storageCostList;
     }
+
+    
 }

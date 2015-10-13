@@ -12,11 +12,10 @@ public class MathCore {
     private List<Integer> stock = new ArrayList<>();
     private List<Integer> ordersPotentials = new ArrayList<>();
     private List<Integer> stockPotentials = new ArrayList<>();
-    List<int[]> cyclePath = new ArrayList<>();
     private List<List> cost = new ArrayList<>();
+    private List<int[]> cyclePath = new ArrayList<>();
     private int[][] routes;
     private int[][] deltas;
-    private int currentCost = 0;
 
     MathCore(List orders, List stock, List cost){
         if (orders != null){
@@ -108,7 +107,6 @@ public class MathCore {
         return this.routes;
     }
 
-
     /**
      * will calculate current summary cost for thr transportation
      * Also will write this value to class-member variable
@@ -121,7 +119,6 @@ public class MathCore {
                 summaryCost += routes[i][j] * Integer.parseInt(cost.get(i).get(j).toString());
             }
         }
-        this.currentCost = summaryCost;
         return summaryCost;
     }
 
@@ -234,7 +231,6 @@ public class MathCore {
         return this.deltas;
     }
 
-
     /**
      * Will find minimal delta in delta table
      * @return int[2], coords of minimal deltas
@@ -254,9 +250,6 @@ public class MathCore {
         return currentMinimalDeltaCoords;
     }
 
-
-
-
     /**
      * Will get random (really) cell in routes area
      * @return int[2] with coords
@@ -269,16 +262,12 @@ public class MathCore {
         return randomCoords;
     }
 
-
     /**
-     * IT'S template! MUST BE WRITTEN AGAING!
-     * Return List with coordinates of array's cells when it can be
+     * Return List with coordinates of basis array's cells when it can be or empty list when cycle isn't possible
      * List.size() == 0 when cycle is't possible
      * @param startCell
      * @return List with coords of cell
      */
-
-
     public List<int[]> getCycle(int[] startCell){
         cyclePath.clear();
         cyclePath.add(startCell);
@@ -290,6 +279,11 @@ public class MathCore {
         return cyclePath;
     }
 
+    /**
+     * Will search for basis cell onto this line of routing table
+     * @param currentCoords
+     * @return true, if we can go to start cell and false, if not
+     */
     private boolean lookHorizotaly(int[] currentCoords){
         for (int i = 0; i < orders.size(); i++){
             if ( (i != currentCoords[1]) && (routes[currentCoords[0]][i] > 0) ){
@@ -308,6 +302,11 @@ public class MathCore {
         return false;
     }
 
+    /**
+     * Will search for basis cell onto this column of routing table
+     * @param currentCoords
+     * @return true, if we can go to start cell and false, if not
+     */
     private boolean lookVerticaly(int[] currentCoords){
         for (int i = 0; i < stock.size(); i++) {
             if ((i != currentCoords[0])&&(routes[i][currentCoords[1]]>0)){
@@ -322,6 +321,9 @@ public class MathCore {
         return false;
     }
 
+    /**
+     * Will redistribute routing plane by cyclePath
+     */
     public void redistribute(){
         int redistributeValue = Integer.MAX_VALUE;
 
@@ -349,18 +351,17 @@ public class MathCore {
                     routes[currentCell[0]][currentCell[1]] = -1;
                 }
             }
-
         }
-
     }
 
 
+    /**
+     * Will return current minimal delta in routing table
+     * @return int, minimal delta
+     */
     public int getMinimalDelta(){
         int[] coords = getMinimalDeltaCoords();
        return deltas[coords[0]][coords[1]];
     }
-
-
-
 
 }
