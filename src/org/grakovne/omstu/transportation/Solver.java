@@ -42,8 +42,6 @@ public class Solver {
         logger.separate();
 
 
-
-
         /*check for degeneracy and fix it*/
         if (core.checkDegeneracy()) {
             logger.writeLine("Задача не вырождена");
@@ -55,7 +53,7 @@ public class Solver {
 
         /*start iterations. maxIterations is need for avoid looping*/
         logger.writeLine("Начинаем итерационный процесс:");
-        for (int i = 0; i < 512; i++) {
+        for (int i = 0; i < maxIterations; i++) {
             /*write some decorations*/
             logger.separate();
             logger.writeLine("####################");
@@ -65,6 +63,7 @@ public class Solver {
 
             /*calculate potentials for orders and storages*/
             logger.writeLine("Рассчитаем потенциалы:");
+            core.checkDegeneracy();
             core.calcPotintials();
             logger.writeLine("Для поставшиков:  (" + core.getStockPotentials() + ")");
             logger.writeLine("Для заказчиков:     (" + core.getOrdersPotentials() + ")");
@@ -93,7 +92,6 @@ public class Solver {
                 result.add(true);
                 return result;
             }
-            //core.checkDegeneracy();
             /*make a cyclical route on basic cells*/
             logger.writeLine("Построим замкнутый цикл:");
             List<int[]> cycle = core.getCycle(core.getMinimalDeltaCoords());
@@ -106,6 +104,10 @@ public class Solver {
 
             /*calculate current cost*/
             logger.writeLine("" + core.getCurrentCost());
+
+
+
+
         }
 
         /*return our data as-is. Maybe something is wrong?*/

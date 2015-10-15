@@ -23,7 +23,15 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Solver solver = new Solver(mainWindow, logger);
-                ResultWindow resultWindow = new ResultWindow(solver.solveTask(500));
+                List resultData = new ArrayList();
+                for (int i = 0; i < 5; i++) {
+                    logger.clearArea();
+                    resultData = solver.solveTask(64);
+                    if ((boolean)resultData.get(2)){
+                        break;
+                    }
+                }
+                ResultWindow resultWindow = new ResultWindow(resultData);
             }
         });
 

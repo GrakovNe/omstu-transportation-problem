@@ -118,7 +118,9 @@ public class MathCore {
         int summaryCost = 0;
         for (int i = 0; i < stock.size(); i++) {
             for (int j = 0; j < orders.size(); j++) {
-                summaryCost += routes[i][j] * Integer.parseInt(cost.get(i).get(j).toString());
+                if (routes[i][j] > 0) {
+                    summaryCost += routes[i][j] * Integer.parseInt(cost.get(i).get(j).toString());
+                }
             }
         }
         return summaryCost;
@@ -133,7 +135,7 @@ public class MathCore {
         int basicSellsNum = 0;
         for (int i = 0; i < stock.size(); i++) {
             for (int j = 0; j < orders.size(); j++) {
-                if (routes[i][j] != 0) {
+                if (routes[i][j] > 0) {
                     basicSellsNum++;
                 }
             }
@@ -225,7 +227,7 @@ public class MathCore {
     }
 
     /**
-     * Will calculate deltas for every route cell. For basic cell it's mut be zero always
+     * Will calculate deltas for every route cell. For basic cell it's must be zero always
      *
      * @return int[][] deltas array of int
      */
