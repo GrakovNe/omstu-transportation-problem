@@ -1,7 +1,5 @@
 package org.grakovne.omstu.transportation;
 
-import javafx.scene.layout.Pane;
-
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;

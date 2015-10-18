@@ -141,6 +141,7 @@ public class MathCore {
             }
         }
 
+
         for (int i = 0; i < stock.size(); i++) {
             for (int j = 0; j < orders.size(); j++) {
                 if (routes[i][j] == 0) {
@@ -159,7 +160,6 @@ public class MathCore {
             while (routes[randomCell[0]][randomCell[1]] != -1) {
                 randomCell = getRandomCell();
             }
-
 
             if (getCycle(randomCell).size() == 0) {
                 routes[randomCell[0]][randomCell[1]] = 0;
@@ -300,7 +300,7 @@ public class MathCore {
      */
     private boolean lookHorizotaly(int[] currentCoords) {
         for (int i = 0; i < orders.size(); i++) {
-            if ((i != currentCoords[1]) && (routes[currentCoords[0]][i] != -1) && (cyclePath.size() %2 != 0)) {
+            if ((i != currentCoords[1]) && (routes[currentCoords[0]][i] != -1) && (cyclePath.size() % 2 != 0)) {
                 int[] newCoords = {currentCoords[0], i};
                 if (i == cyclePath.get(0)[1]) {
                     cyclePath.add(newCoords);
@@ -349,19 +349,29 @@ public class MathCore {
             }
         }
 
+
+        for (int i = 0; i < stock.size(); i++) {
+            for (int j = 0; j < orders.size(); j++) {
+                if (routes[i][j] == -1) {
+                    routes[i][j] = 0;
+                }
+            }
+        }
+
         for (int i = 0; i < cyclePath.size(); i++) {
             int[] currentCell = cyclePath.get(i);
-
-            if (routes[currentCell[0]][currentCell[1]] == -1) {
-                routes[currentCell[0]][currentCell[1]] = 0;
-            }
 
             if (i % 2 == 0) {
                 routes[currentCell[0]][currentCell[1]] += redistributeValue;
             } else {
                 routes[currentCell[0]][currentCell[1]] -= redistributeValue;
-                if (routes[currentCell[0]][currentCell[1]] <= 0) {
-                    routes[currentCell[0]][currentCell[1]] = -1;
+            }
+        }
+
+        for (int i = 0; i < stock.size(); i++) {
+            for (int j = 0; j < orders.size(); j++) {
+                if (routes[i][j] == 0) {
+                    routes[i][j] = -1;
                 }
             }
         }
